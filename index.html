@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHA-256 Password Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        main {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type=text] {
+            width: 80%;
+            max-width: 500px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 80%;
+            max-width: 700px;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+        #tableContainer {
+            width: 100%;
+            display: none;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SHA-256 Hash Password Checker</h1>
+    </header>
+    <main>
+        <input type="text" id="hashInput" placeholder="Enter SHA-256 hash">
+        <button onclick="checkHash()">Check</button>
+        <div id="tableContainer">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SHA-256 Hash</th>
+                        <th>Plaintext</th>
+                    </tr>
+                </thead>
+                <tbody id="resultTableBody"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        const hashDict = {
+            "8bb0cf6eb9b17d0f7d22b456f121257dc1254e1f01665370476383ea776df414": "1234567",
+            "2558a34d4d20964ca1d272ab26ccce9511d880579593cd4c9e01ab91ed00f325": "1111111",
+            "20fdf64da3cd2c78ec3c033d2ac628bacf701711fa99435ee37bef0304800dc5": "0000000",
+            "fe68a21fc76bba7b3a3d8e454eca8cd258de68fd08dddf035f23ddbdce6fc049": "7654321",
+            "cc2e018aa6eb9612ccd027bbdcdc9b8c8d351789f14cae4d688a876c18938235": "2222222",
+            "b7e60b19dbf9d2bcb319ba66eec45eb9c67f205f537f36ec18f2896f9febb742": "9999999",
+            "3315c3490373d0c9c0eaf58f14331452d0f3b6e4db131d106d83376a61858b77": "1212121",
+            "f4227d66b520f35c78b27abcc1f128cff27f6df7737262e196c7ff0d3bcab55c": "1231231",
+            "1b88a93113daa9a8d551b4def4f03eced42fa1e0a96b595d3ea7885df1e6b65b": "1233211",
+            "19461b43bbba8a3a4da70703bda96dbc6dcdc2ee78507e34d2bf0f281932fd1f": "1234321",
+            "1f8b6d5a89242a0984816601b1a527ed239e16e213182481301d2706f4396703": "4444444",
+            "eb754f7512ef99ebf6d031b1355b496c0ecec0f08bcd1f6d7a790a5a8264be0c": "6666666",
+            "8783b7dff7a7109035e8df613232d21b3f4a4aa532fb8f53d1059046814dc657": "5555555",
+            "3deaa5418cef4f488068cc6011a802b2b37cadd3afce80674778c25e21f2fb1c": "9876543",
+            "86ecc54208e373f29de1f1597909d277c9ae335560dda14673061668c5eb16a1": "1472583",
+            "01cb2c2ba1e28377f6ef57750580d741a6ef98e6eabcb7fa6176b2359c07cec3": "1357924",
+            "c78f985ed2616d3151ab1edce45d1a8d1fd42c6e53534ecbc4ff8e86fd52b4be": "1122334",
+            "1a885139a8d17ffb7dbcb4df10649ef716efc1a1dd7f877ca7c0b15e2d9e8c5b": "7654320",
+            "9b8b8f77e2e2bfa6b01441603e5d7b801d9c9e9dc20d8c0c79d38fdba299b2cc": "1234568",
+            "c62a175ac0840dc6881f6d50396f8f2cd0d68c8c083ee9ebee4197ddde1d63b7": "1234555"
+        };
+
+        function checkHash() {
+            const input = document.getElementById("hashInput").value.trim();
+            const tableContainer = document.getElementById("tableContainer");
+            const tableBody = document.getElementById("resultTableBody");
+            tableBody.innerHTML = "";
+
+            if (hashDict[input]) {
+                const row = document.createElement("tr");
+                const hashCell = document.createElement("td");
+                const plainCell = document.createElement("td");
+                hashCell.textContent = input;
+                plainCell.textContent = hashDict[input];
+                row.appendChild(hashCell);
+                row.appendChild(plainCell);
+                tableBody.appendChild(row);
+                tableContainer.style.display = "flex";
+            } else {
+                tableBody.innerHTML = `<tr><td colspan='2' style='color:red;'>❌ Hash not found</td></tr>`;
+                tableContainer.style.display = "flex";
+            }
+        }
+    </script>
+</body>
+</html>
